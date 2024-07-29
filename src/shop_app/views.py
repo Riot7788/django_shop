@@ -4,13 +4,6 @@ from django.shortcuts import render
 
 # Create your views here.
 
-def template_view(request):
-    return render(
-        request=request,
-        template_name="base.html",
-    )
-
-
 def home_view(request):
     return render(
         request=request,
@@ -37,3 +30,4 @@ def comment_user(request):
         request=request,
         template_name="comment_user.html"
     )
+
