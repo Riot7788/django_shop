@@ -5,7 +5,43 @@
 {% block title %} Catalog product {% endblock %}
 
 {% block content %}
-
+<div class="row">
+    <div class="dropdown mb-2">
+        <button class="btn btn-secondary dropdown-toggle btn-dark" type="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Фильтры
+        </button>
+        <form action="" method="get" class="dropdown-menu bg-dark" data-bs-theme="dark">
+            <div class="form-check text-white mx-3">
+                <input class="form-check-input" type="checkbox" name="on_sale" id="flexCheckDefault" value="on">
+                <input type="hidden" name="q" value="request.GET.q">
+                <label class="form-check-label" for="flexCheckDefault">
+                    Товары по акции
+                </label>
+            </div>
+            <p class="text-white mx-3 mt-3">Сортировать:</p>
+            <div class="form-check text-white mx-3">
+                <input class="form-check-input" type="radio" name="order_by" id="flexRadioDefault1" value="default" checked>
+                <label class="form-check-label" for="flexRadioDefault1">
+                    По умолчанию
+                </label>
+            </div>
+            <div class="form-check text-white mx-3">
+                <input class="form-check-input" type="radio" name="order_by" id="flexRadioDefault2" value="price">
+                <label class="form-check-label" for="flexRadioDefault2">
+                    От дешевых к дорогим
+                </label>
+            </div>
+            <div class="form-check text-white mx-3">
+                <input class="form-check-input" type="radio" name="order_by" id="flexRadioDefault3" value="-price">
+                <label class="form-check-label" for="flexRadioDefault3">
+                    От дорогих к дешевым
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary mx-3 mt-3">Применить</button>
+        </form>
+    </div>
+</div>
 
 {% for category in categories %}
 
@@ -15,5 +51,35 @@
 
 {% endfor %}
 
+{% for product in goods %}
+
+<div class="col-lg-4 col-md-6 p4">
+    <div class="card" style="width: 18rem;">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+            <a href="{% url 'product' product.slug %}">
+                <h5 class="card-title">{{ product.name }}</h5>
+            </a>
+            <p class="card-text">{{ product.description }}</p>
+            <p class="product_id">id: {{ product.display_id }}</p>
+
+                {% if product.discount %}
+
+                  <p><s>{{ product.price }} руб.</s></p>
+                  <p><strong>{{ product.sell_price }} руб.</strong></p>
+                  <span class="bage bg-warning text-dark"> Скидка {{ product.discount }} %</span>
+
+                {% else %}
+
+                  <p><strong>{{ product.price }} руб.</strong></p>
+
+                {% endif %}
+
+          <a href="#" class="btn btn-primary"> ### </a>
+      </div>
+    </div>
+</div>
+
+{% endfor %}
 
 {% endblock %}
