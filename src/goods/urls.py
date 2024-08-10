@@ -9,5 +9,5 @@ from .views import (
 
 urlpatterns = [
     path('', catalog, name='index'),
-    path('product/', product, name="product"),
+    path('product/<slug:product_slug>/', product, name="product"),
 ]
