@@ -5,6 +5,7 @@
 {% block title %} Catalog product {% endblock %}
 
 {% block content %}
+
 <div class="row">
     <div class="dropdown mb-2">
         <button class="btn btn-secondary dropdown-toggle btn-dark" type="button" data-bs-toggle="dropdown"
@@ -46,40 +47,75 @@
 {% for category in categories %}
 
 <div class="d-grid gap-2 col-6 mx-auto">
-    <a class="btn btn-outline-dark" href="{% url 'index' %}" role="button">{{category.name}}</a>
+    <a class="btn btn-outline-dark" href="{% url 'index' category.slug %}" role="button">{{category.name}}</a>
 </div>
 
 {% endfor %}
 
-{% for product in goods %}
+<div class="row">
 
-<div class="col-lg-4 col-md-6 p4">
-    <div class="card" style="width: 18rem;">
-        <img src="..." class="card-img-top" alt="...">
-        <div class="card-body">
-            <a href="{% url 'product' product.slug %}">
-                <h5 class="card-title">{{ product.name }}</h5>
-            </a>
-            <p class="card-text">{{ product.description }}</p>
-            <p class="product_id">id: {{ product.display_id }}</p>
+    {% for product in goods %}
 
-                {% if product.discount %}
+    <div class="col-lg-4 col-md-6 p4">
+        <div class="card" style="width: 18rem;">
+            <img src="#" class="card-img-top" alt="#">
+            <div class="card-body">
+                <a href="{% url 'product' product.slug %}">
+                    <h5 class="card-title">{{ product.name|truncatechars:20 }}</h5>
+                </a>
+                <p class="card-text">{{ product.description|truncatechars:50 }}</p>
+                <p class="product_id">id: {{ product.display_id }}</p>
 
-                  <p><s>{{ product.price }} руб.</s></p>
-                  <p><strong>{{ product.sell_price }} руб.</strong></p>
-                  <span class="bage bg-warning text-dark"> Скидка {{ product.discount }} %</span>
+                    {% if product.discount %}
 
-                {% else %}
+                      <p><s>{{ product.price }} руб.</s></p>
+                      <p><strong>{{ product.sell_price }} руб.</strong></p>
+                      <span class="bage bg-warning text-dark"> Скидка {{ product.discount }} %</span>
 
-                  <p><strong>{{ product.price }} руб.</strong></p>
+                    {% else %}
 
-                {% endif %}
+                      <p><strong>{{ product.price }} руб.</strong></p>
 
-          <a href="#" class="btn btn-primary"> ### </a>
-      </div>
+                    {% endif %}
+
+              <a href="#" class="btn btn-primary"> ### </a>
+          </div>
+        </div>
     </div>
+    {% endfor %}
 </div>
 
-{% endfor %}
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center my-4">
+        <div class="custom-shadow d-flex">
+            <!--Кнопка Назад-->
+            <li class="page-item {% if not goods.has_previous %} disabled {% endif %}">
+                <a class="page-link" href="{% if goods.has_previous %}
+                {% url 'index' slug_url goods.previous_page_number %}
+                {% else %}
+                #
+                {% endif %}">Назад</a>
+            </li>
+
+            <!--Переключение по страницам-->
+            {% for page in goods.paginator.page_range %}
+            {% if page >= goods.number|add:-2 and page <= goods.number|add:2   %}
+                <li class="page-item {% if goods.number == page %} active {% endif %}">
+                    <a class="page-link" href="{% url 'index' slug_url page %}">{{ page }}</a>
+                </li>
+            {% endif %}
+            {% endfor %}
+
+            <!--Кнопка Следующая -->
+            <li class="page-item {% if not goods.has_next %} disabled {% endif %}">
+                <a class="page-link" href="{% if goods.has_next %}
+                {% url 'index' slug_url goods.next_page_number %}
+                {% else %}
+                #
+                {% endif %}">Следующая</a>
+        </div>
+    </ul>
+</nav>
 
 {% endblock %}

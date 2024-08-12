@@ -30,6 +30,7 @@ class Products(models.Model):
     class Meta:
         db_table = "product"
         verbose_name = "Продукт"
+        ordering = ("id",)
 
     def __str__(self):
         return f'{self.name} Количество - {self.quantity}'
