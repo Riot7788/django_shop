@@ -5,16 +5,27 @@ from .models import Categories
 from .models import Products
 
 
-def catalog(request, category_slug, page=1):
+def catalog(request, category_slug):
+
+    page = request.GET.get('page', 1)
+    on_sale = request.GET.get('on_sale', None)
+    order_by = request.GET.get('order_by', None)
+
     if category_slug == "all":
         goods = Products.objects.all()
     else:
         goods = Products.objects.filter(category__slug=category_slug)
 
+    if on_sale:
+        goods = goods.filter(discount__gt=0)
+
+    if order_by and order_by != "default":
+        goods = goods.order_by(order_by)
+
     categories = Categories.objects.all()
 
-    paginator = Paginator(goods, 6)
-    page_obj = paginator.page(page)
+    paginator = Paginator(goods, 9)
+    page_obj = paginator.page(int(page))
 
 
     context = {
