@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 
     'shop_app',
     'goods',
+    'users',
 
     'debug_toolbar',
 ]
