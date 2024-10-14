@@ -2,7 +2,6 @@ from django.urls import path
 
 
 from .views import (
-
     home_view,
     about_us,
     contact_info,

@@ -44,12 +44,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'django.contrib.postgres',
+    'debug_toolbar',
 
     'shop_app',
     'goods',
     'users',
-
-    'debug_toolbar',
+    'carts',
 ]
 
 MIDDLEWARE = [
