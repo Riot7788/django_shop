@@ -23,7 +23,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  text-white" href="#">Корзина</a>
+                    <a class="nav-link  text-white" href="{% url 'users_cart' %}">Корзина</a>
                 </li>
 
                 {% if not user.is_authenticated %}
@@ -37,7 +37,7 @@
                             Мой профиль
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item  text-white" href="#">Корзина</a></li>
+                            <li><a class="dropdown-item  text-white" href="{% url 'users_cart' %}">Корзина</a></li>
                             <li><a class="dropdown-item  text-white" href="{% url 'profile' %}">Личный кабинет</a>
 
                             {% if user.is_admin or user.is_staff %}

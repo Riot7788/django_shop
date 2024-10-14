@@ -83,6 +83,10 @@ def profile(request):
     )
 
 
+def users_cart(request):
+    return render(request, 'users/users_cart.html')
+
+
 def logout(request):
     auth.logout(request)
     return redirect(reverse('home'))
