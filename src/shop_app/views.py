@@ -1,11 +1,19 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from goods.models import Products
 
 
 def home_view(request):
+
+    sale_products = Products.objects.filter(discount__gt=0)
+
+    context = {
+        'sale_products': sale_products,
+    }
     return render(
         request=request,
-        template_name="home.html"
+        template_name="home.html",
+        context=context
     )
 
 
